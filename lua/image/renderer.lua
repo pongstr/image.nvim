@@ -104,7 +104,7 @@ local render = function(image)
     -- check if image is in fold
     local current_win = vim.api.nvim_get_current_win()
     vim.api.nvim_command("noautocmd call nvim_set_current_win(" .. image.window .. ")")
-    local is_folded = vim.fn.foldclosed(original_y) ~= -1
+    local is_folded = vim.fn.foldclosed(original_y + 1) ~= -1
     vim.api.nvim_command("noautocmd call nvim_set_current_win(" .. current_win .. ")")
 
     -- bail if it is
@@ -177,7 +177,7 @@ local render = function(image)
     absolute_y = original_y
   else
     local win_info = vim.fn.getwininfo(image.window)[1]
-    local screen_pos = vim.fn.screenpos(image.window, original_y, original_x)
+    local screen_pos = vim.fn.screenpos(image.window, math.max(1, original_y), original_x)
 
     if
       screen_pos.col == 0 --
